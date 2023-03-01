@@ -2,9 +2,9 @@
 {
     public sealed class Game
     {
-        public static void Main()
+        public void Play()
         {
-            Console.WriteLine("Hello!");
+            Console.WriteLine("There will be game :p");
         }
     }
 }

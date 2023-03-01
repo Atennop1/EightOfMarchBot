@@ -13,3 +13,6 @@ C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\refi
 C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.pdb
 C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.genruntimeconfig.cache
 C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\ref\EightOfMarchBot.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\Telegram.Bot.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.csproj.CopyComplete
