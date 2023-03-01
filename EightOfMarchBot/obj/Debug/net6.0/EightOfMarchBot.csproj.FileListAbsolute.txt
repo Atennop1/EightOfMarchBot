@@ -1,0 +1,15 @@
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\EightOfMarchBot.exe
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\EightOfMarchBot.deps.json
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\EightOfMarchBot.runtimeconfig.json
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\EightOfMarchBot.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\bin\Debug\net6.0\EightOfMarchBot.pdb
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.AssemblyInfo.cs
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\refint\EightOfMarchBot.dll
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.pdb
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\EightOfMarchBot.genruntimeconfig.cache
+C:\Users\User\source\repos\EightOfMarchBot\EightOfMarchBot\obj\Debug\net6.0\ref\EightOfMarchBot.dll
