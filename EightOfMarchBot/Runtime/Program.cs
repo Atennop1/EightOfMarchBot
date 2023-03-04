@@ -1,10 +1,11 @@
-﻿namespace EightOfMarchBot;
-
-public sealed class Program
+﻿namespace EightOfMarchBot
 {
-    public static void Main(string[] args)
+    public sealed class Program
     {
-        var game = new Game();
-        game.Play();
+        public static void Main(string[] args)
+        {
+            var game = new Game();
+            game.Play();
+        }
     }
 }

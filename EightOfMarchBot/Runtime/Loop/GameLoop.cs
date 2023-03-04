@@ -1,36 +1,38 @@
-﻿namespace EightOfMarchBot.Loop;
-
-public sealed class GameLoop : IGameLoop
+﻿namespace EightOfMarchBot.Loop
 {
-    private readonly List<IGameLoopObject> _gameLoopObjects;
-    private const int UpdatesPerSeconds = 10;
-
-    public GameLoop()
-        => _gameLoopObjects = new List<IGameLoopObject>();
-
-    public GameLoop(List<IGameLoopObject> gameLoopObjects)
-        => _gameLoopObjects = gameLoopObjects ?? throw new ArgumentNullException(nameof(gameLoopObjects));
-
-    public void Add(IGameLoopObject gameLoopObject)
+    public sealed class GameLoop : IGameLoop
     {
-        if (gameLoopObject == null)
-            throw new ArgumentNullException(nameof(gameLoopObject));
-        
-        _gameLoopObjects.Add(gameLoopObject);
-    }
+        private readonly List<IGameLoopObject> _gameLoopObjects;
+        private const int UpdatesPerSeconds = 3;
 
-    public async void Activate()
-    {
-        var deltaTime = 1f / UpdatesPerSeconds;
-        var workingThread = new Thread(() =>
+        public GameLoop()
+            => _gameLoopObjects = new List<IGameLoopObject>();
+
+        public GameLoop(List<IGameLoopObject> gameLoopObjects)
+            => _gameLoopObjects = gameLoopObjects ?? throw new ArgumentNullException(nameof(gameLoopObjects));
+
+        public void Add(IGameLoopObject gameLoopObject)
         {
-            while (true)
-            {
-                _gameLoopObjects.ForEach(gameLoopObject => gameLoopObject.Update(deltaTime));
-                Thread.Sleep((int)(deltaTime * 1000));
-            }
-        });
+            if (gameLoopObject == null)
+                throw new ArgumentNullException(nameof(gameLoopObject));
         
-        workingThread.Start();
+            _gameLoopObjects.Add(gameLoopObject);
+        }
+
+        public void Activate()
+        {
+            var deltaTime = 1f / UpdatesPerSeconds;
+        
+            var workingThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    _gameLoopObjects.ForEach(gameLoopObject => gameLoopObject.Update(deltaTime));
+                    Thread.Sleep((int)(deltaTime * 1000));
+                }
+            });
+        
+            workingThread.Start();
+        }
     }
 }

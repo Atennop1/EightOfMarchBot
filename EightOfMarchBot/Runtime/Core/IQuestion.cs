@@ -3,6 +3,6 @@
     public interface IQuestion
     {
         string Text { get; }
-        string Answer { get; }
+        bool IsAnswerCorrect(string answer);
     }
 }

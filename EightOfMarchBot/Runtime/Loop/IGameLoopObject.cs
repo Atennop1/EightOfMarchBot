@@ -1,6 +1,7 @@
-﻿namespace EightOfMarchBot.Loop;
-
-public interface IGameLoopObject
+﻿namespace EightOfMarchBot.Loop
 {
-    void Update(float deltaTime);
+    public interface IGameLoopObject
+    {
+        void Update(float deltaTime);
+    }
 }
