@@ -16,7 +16,7 @@
             if (answer == null)
                 throw new ArgumentNullException(nameof(answer));
             
-            return _answer == answer;
+            return _answer.ToLower() == answer.ToLower();
         }
     }
 }

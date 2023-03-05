@@ -27,7 +27,10 @@ namespace EightOfMarchBot.Loop
         public void Continue(string answer)
         {
             if (!_currentQuestion.IsAnswerCorrect(answer))
+            {
+                _messageSender.SendMessage("Неверный ответ");
                 return;
+            }
 
             var nextQuestionIndex = _questions.IndexOf(_currentQuestion) + 1;
             

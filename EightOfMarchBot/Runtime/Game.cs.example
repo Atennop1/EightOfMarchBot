@@ -1,0 +1,63 @@
+﻿using EightOfMarchBot.Core;
+using EightOfMarchBot.Loop;
+using Telegram.Bot;
+using Telegram.Bot.Exceptions;
+using Telegram.Bot.Types;
+
+namespace EightOfMarchBot
+{
+    public sealed class Game
+    {
+        private IMessageSender _messageSender;
+        private GameLoop _gameLoop;
+        
+        public void Play()
+        {
+            var client = new TelegramBotClient("your bot token");
+            _messageSender = new MessageSender(client);
+            
+            var gameStart = new GameStart(_messageSender);
+            var gameEnd = new GameEnd(_messageSender);
+
+            var questions = new List<IQuestion>
+            {
+                new Question("Вопрос 1", "Ответ 1"),
+                new Question("Вопрос 2", "Ответ 2")
+            };
+
+            var questionsCycle = new QuestionsCycle(questions, _messageSender);
+            _gameLoop = new GameLoop(questionsCycle, gameStart, gameEnd);
+            
+            client.StartReceiving(UpdateHandler, ErrorHandler);
+        }
+
+        private Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
+            if (update.Message == null || update.Message.Text == null)
+                return Task.CompletedTask;
+
+            _messageSender.ChangeChat(update.Message.Chat.Id);
+            
+            if (update.Message.Text == "/start")
+            {
+                _gameLoop.Start();
+                return Task.CompletedTask;
+            }
+            
+            _gameLoop.Continue(update.Message.Text);
+            return Task.CompletedTask;
+        }
+
+        private Task ErrorHandler(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+        {
+            var errorMessage = exception switch
+            {
+                ApiRequestException apiRequestException => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
+                _ => exception.ToString()
+            };
+
+            Console.WriteLine(errorMessage);
+            return Task.CompletedTask;
+        }
+    }
+}

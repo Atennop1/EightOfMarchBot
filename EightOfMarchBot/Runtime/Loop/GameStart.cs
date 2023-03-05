@@ -4,7 +4,7 @@ namespace EightOfMarchBot.Loop
 {
     public sealed class GameStart : IGameStart
     {
-        private const string HelloMessage = "";
+        private const string HelloMessage = "Привет! Квест начался";
         private readonly IMessageSender _messageSender;
 
         public GameStart(IMessageSender messageSender)

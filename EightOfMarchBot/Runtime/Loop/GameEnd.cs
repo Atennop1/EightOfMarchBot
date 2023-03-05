@@ -4,7 +4,7 @@ namespace EightOfMarchBot.Loop
 {
     public sealed class GameEnd : IGameEnd
     {
-        private const string CongratulationsMessage = "";
+        private const string CongratulationsMessage = "Квест завершен!";
         private readonly IMessageSender _messageSender;
 
         public GameEnd(IMessageSender messageSender)
