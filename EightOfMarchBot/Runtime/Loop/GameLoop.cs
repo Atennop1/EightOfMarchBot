@@ -1,38 +1,33 @@
 ﻿namespace EightOfMarchBot.Loop
 {
-    public sealed class GameLoop : IGameLoop
+    public sealed class GameLoop
     {
-        private readonly List<IGameLoopObject> _gameLoopObjects;
-        private const int UpdatesPerSeconds = 3;
+        private readonly IQuestionsCycle _questionsCycle;
+        private readonly IGameStart _gameStart;
+        private readonly IGameEnd _gameEnd;
 
-        public GameLoop()
-            => _gameLoopObjects = new List<IGameLoopObject>();
-
-        public GameLoop(List<IGameLoopObject> gameLoopObjects)
-            => _gameLoopObjects = gameLoopObjects ?? throw new ArgumentNullException(nameof(gameLoopObjects));
-
-        public void Add(IGameLoopObject gameLoopObject)
+        public GameLoop(IQuestionsCycle questionsCycle, IGameStart gameStart, IGameEnd gameEnd)
         {
-            if (gameLoopObject == null)
-                throw new ArgumentNullException(nameof(gameLoopObject));
-        
-            _gameLoopObjects.Add(gameLoopObject);
+            _questionsCycle = questionsCycle ?? throw new ArgumentNullException(nameof(questionsCycle));
+            _gameStart = gameStart ?? throw new ArgumentNullException(nameof(gameStart));
+            _gameEnd = gameEnd ?? throw new ArgumentNullException(nameof(gameEnd));
         }
 
-        public void Activate()
+        public void Start()
         {
-            var deltaTime = 1f / UpdatesPerSeconds;
-        
-            var workingThread = new Thread(() =>
-            {
-                while (true)
-                {
-                    _gameLoopObjects.ForEach(gameLoopObject => gameLoopObject.Update(deltaTime));
-                    Thread.Sleep((int)(deltaTime * 1000));
-                }
-            });
-        
-            workingThread.Start();
+            _gameStart.Activate();
+            _questionsCycle.Start();
+        }
+
+        public void Continue(string text)
+        {
+            if (_questionsCycle.IsEnded)
+                return;
+            
+            _questionsCycle.Continue(text);
+
+            if (_questionsCycle.IsEnded)
+                _gameEnd.Activate();
         }
     }
 }

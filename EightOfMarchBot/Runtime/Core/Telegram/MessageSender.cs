@@ -1,24 +1,29 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
+#pragma warning disable CS8618
 
 namespace EightOfMarchBot.Core
 {
     public sealed class MessageSender : IMessageSender
     {
         private readonly ITelegramBotClient _botClient;
+        private ChatId _currentChatId;
 
         public MessageSender(ITelegramBotClient botClient)
             => _botClient = botClient ?? throw new ArgumentNullException(nameof(botClient));
 
-        public async void SendMessage(ChatId chatId, string message)
+        public void ChangeChat(ChatId chatId)
+            => _currentChatId = chatId ?? throw new ArgumentNullException(nameof(chatId));
+
+        public async void SendMessage(string message)
         {
-            try { await _botClient.SendTextMessageAsync(chatId, message); }
+            try { await _botClient.SendTextMessageAsync(_currentChatId, message); }
             catch { /* Some client issues */ }
         }
 
-        public async void SendPhoto(ChatId chatId, string photo, string text)
+        public async void SendPhoto(string photo, string text)
         {
-            try { await _botClient.SendPhotoAsync(chatId, photo, text); }
+            try { await _botClient.SendPhotoAsync(_currentChatId, photo, text); }
             catch { /* Some client issues */ }
         }
     }
