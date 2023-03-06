@@ -26,6 +26,9 @@ namespace EightOfMarchBot.Loop
 
         public void Continue(string answer)
         {
+            if (_currentQuestion == null)
+                _currentQuestion = _questions[0];
+            
             if (!_currentQuestion.IsAnswerCorrect(answer))
             {
                 _messageSender.SendMessage("Неверный ответ");

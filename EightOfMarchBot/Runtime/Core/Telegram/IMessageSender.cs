@@ -1,11 +1,9 @@
-﻿using Telegram.Bot.Types;
-
-namespace EightOfMarchBot.Core
+﻿namespace EightOfMarchBot.Core
 {
     public interface IMessageSender
     {
-        void ChangeChat(ChatId chatId);
+        void ChangeChat(string chatId);
         void SendMessage(string message);
-        void SendPhoto(string photo, string text);
+        void SendPhoto(string photo);
     }
 }

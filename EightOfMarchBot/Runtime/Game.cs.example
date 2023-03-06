@@ -1,8 +1,7 @@
 ﻿using EightOfMarchBot.Core;
 using EightOfMarchBot.Loop;
-using Telegram.Bot;
-using Telegram.Bot.Exceptions;
-using Telegram.Bot.Types;
+using Telegram.BotAPI;
+using Telegram.BotAPI.GettingUpdates;
 
 namespace EightOfMarchBot
 {
@@ -13,7 +12,7 @@ namespace EightOfMarchBot
         
         public void Play()
         {
-            var client = new TelegramBotClient("your bot token");
+            var client = new BotClient("your bot token");
             _messageSender = new MessageSender(client);
             
             var gameStart = new GameStart(_messageSender);
@@ -27,37 +26,41 @@ namespace EightOfMarchBot
 
             var questionsCycle = new QuestionsCycle(questions, _messageSender);
             _gameLoop = new GameLoop(questionsCycle, gameStart, gameEnd);
-            
-            client.StartReceiving(UpdateHandler, ErrorHandler);
+
+            StartUpdatingCycle(client);
         }
 
-        private Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        private void StartUpdatingCycle(BotClient client)
         {
-            if (update.Message == null || update.Message.Text == null)
-                return Task.CompletedTask;
+            var updates = client.GetUpdates();
 
-            _messageSender.ChangeChat(update.Message.Chat.Id);
-            
-            if (update.Message.Text == "/start")
+            while (true)
             {
-                _gameLoop.Start();
-                return Task.CompletedTask;
+                if (!updates.Any())
+                {
+                    updates = client.GetUpdates();
+                    continue;
+                }
+                
+                foreach (var update in updates)
+                {
+                    if (update.Message == null || update.Message.Text == null)
+                        continue;
+
+                    _messageSender.ChangeChat(update.Message.Chat.Id.ToString());
+            
+                    if (update.Message.Text == "/start")
+                    {
+                        _gameLoop.Start();
+                        continue;
+                    }
+            
+                    _gameLoop.Continue(update.Message.Text);
+                }
+
+                var offset = updates.Last().UpdateId + 1;
+                updates = client.GetUpdates(offset, limit: 10, timeout: 60);
             }
-            
-            _gameLoop.Continue(update.Message.Text);
-            return Task.CompletedTask;
-        }
-
-        private Task ErrorHandler(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-        {
-            var errorMessage = exception switch
-            {
-                ApiRequestException apiRequestException => $"Telegram API Error:\n[{apiRequestException.ErrorCode}]\n{apiRequestException.Message}",
-                _ => exception.ToString()
-            };
-
-            Console.WriteLine(errorMessage);
-            return Task.CompletedTask;
         }
     }
 }

@@ -44,9 +44,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Telegram.Bot": {
+            "Telegram.BotAPI": {
               "target": "Package",
-              "version": "[18.0.0, )"
+              "version": "[6.5.1, )"
             }
           },
           "imports": [
