@@ -40,6 +40,7 @@ namespace EightOfMarchBot.Loop
                 return;
             }
             
+            _messageSender.SendMessage("Правильно!");
             _currentQuestion = _questions[nextQuestionIndex];
             _messageSender.SendMessage(_currentQuestion.Text);
         }
