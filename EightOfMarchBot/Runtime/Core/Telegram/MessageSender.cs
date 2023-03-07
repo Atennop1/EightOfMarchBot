@@ -18,13 +18,27 @@ namespace EightOfMarchBot.Core
 
         public void SendMessage(string message)
         {
-            try { _botClient.SendMessage(new SendMessageArgs(_currentChatId, message)); }
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+            
+            try{ _botClient.SendMessage(new SendMessageArgs(_currentChatId, message)); }
             catch { /* Some client issues */ }
         }
 
-        public void SendPhoto(string photo)
+        public void SendPhoto(string photoLink, string message)
         {
-            try { _botClient.SendPhoto(new SendPhotoArgs(_currentChatId, photo)); }
+            if (photoLink == null)
+                throw new ArgumentNullException(nameof(photoLink));
+            
+            if (message == null)
+                throw new ArgumentNullException(nameof(message));
+
+            try
+            {
+                var sendPhotoArgs = new SendPhotoArgs(_currentChatId, photoLink);
+                sendPhotoArgs.Caption = message;
+                _botClient.SendPhoto(sendPhotoArgs);
+            }
             catch { /* Some client issues */ }
         }
     }

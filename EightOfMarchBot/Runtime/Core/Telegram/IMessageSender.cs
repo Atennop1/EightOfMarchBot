@@ -4,6 +4,6 @@
     {
         void ChangeChat(string chatId);
         void SendMessage(string message);
-        void SendPhoto(string photo);
+        void SendPhoto(string photoLink, string message);
     }
 }
