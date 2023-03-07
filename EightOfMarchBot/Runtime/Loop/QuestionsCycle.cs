@@ -16,19 +16,14 @@ namespace EightOfMarchBot.Loop
         {
             _questions = questions ?? throw new ArgumentNullException(nameof(questions));
             _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
+            _currentQuestion = _questions[0];
         }
 
         public void Start()
-        {
-            _currentQuestion = _questions[0];
-            _messageSender.SendMessage(_currentQuestion.Text);
-        }
+            => _messageSender.SendMessage($"Осталось вопросов: {_questions.Count}\n{_currentQuestion.Text}");
 
         public void Continue(string answer)
         {
-            if (_currentQuestion == null)
-                _currentQuestion = _questions[0];
-            
             if (!_currentQuestion.IsAnswerCorrect(answer))
             {
                 _messageSender.SendMessage("Неверный ответ");
@@ -43,9 +38,9 @@ namespace EightOfMarchBot.Loop
                 return;
             }
             
-            _messageSender.SendMessage("Правильно!");
             _currentQuestion = _questions[nextQuestionIndex];
-            _messageSender.SendMessage(_currentQuestion.Text);
+            var remainingQuestionsCount = _questions.Count - _questions.IndexOf(_currentQuestion);
+            _messageSender.SendMessage($"Правильно! Осталось вопросов: {remainingQuestionsCount}\n{_currentQuestion.Text}");
         }
     }
 }
