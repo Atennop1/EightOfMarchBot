@@ -16,15 +16,15 @@ namespace EightOfMarchBot.Core
         public void ChangeChat(string chatId)
             => _currentChatId = chatId ?? throw new ArgumentNullException(nameof(chatId));
 
-        public async void SendMessage(string message)
+        public void SendMessage(string message)
         {
-            try { await _botClient.SendMessageAsync(new SendMessageArgs(_currentChatId, message)); }
+            try { _botClient.SendMessage(new SendMessageArgs(_currentChatId, message)); }
             catch { /* Some client issues */ }
         }
 
-        public async void SendPhoto(string photo)
+        public void SendPhoto(string photo)
         {
-            try { await _botClient.SendPhotoAsync(new SendPhotoArgs(_currentChatId, photo)); }
+            try { _botClient.SendPhoto(new SendPhotoArgs(_currentChatId, photo)); }
             catch { /* Some client issues */ }
         }
     }
