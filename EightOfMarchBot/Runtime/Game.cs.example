@@ -24,7 +24,18 @@ namespace EightOfMarchBot
                 new Question("Вопрос 2", "Ответ 2")
             };
 
-            var questionsCycle = new QuestionsCycle(questions, _messageSender);
+            var congratulations = new[]
+            {
+                "Верно",
+                "Верный ответ",
+                "Так держать",
+                "Хорошая работа"
+            };
+
+            var congratulationsFactory = new CongratulationsFactory(congratulations);
+            var remainingQuestionsPhraseFactory = new RemainingQuestionsPhraseFactory();
+            
+            var questionsCycle = new QuestionsCycle(questions, congratulationsFactory, remainingQuestionsPhraseFactory, _messageSender);
             _gameLoop = new GameLoop(questionsCycle, gameStart, gameEnd);
 
             StartUpdatingCycle(client);
