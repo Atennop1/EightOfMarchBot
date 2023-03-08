@@ -1,11 +1,9 @@
 ﻿namespace EightOfMarchBot.Loop;
 
-public sealed class RemainingQuestionsPhraseFactory
+public sealed class RemainingQuestionsPhrase
 {
-    public string Create(int currentQuestionIndex, int questionsCount)
+    public string GetPhrase(int remainingQuestionsCount)
     {
-        var remainingQuestionsCount = questionsCount - currentQuestionIndex;
-
         return remainingQuestionsCount switch
         {
             > 2 => $"Осталось загадок: {remainingQuestionsCount}.",

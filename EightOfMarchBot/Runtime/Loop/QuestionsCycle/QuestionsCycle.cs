@@ -10,21 +10,21 @@ namespace EightOfMarchBot.Loop
         private readonly List<IQuestion> _questions;
         private readonly IMessageSender _messageSender;
         private readonly CongratulationsFactory _congratulationsFactory;
-        private readonly RemainingQuestionsPhraseFactory _remainingQuestionsPhraseFactory;
+        private readonly RemainingQuestionsPhrase _remainingQuestionsPhrase;
         
         private IQuestion _currentQuestion;
 
-        public QuestionsCycle(List<IQuestion> questions, CongratulationsFactory congratulationsFactory, RemainingQuestionsPhraseFactory remainingQuestionsPhraseFactory, IMessageSender messageSender)
+        public QuestionsCycle(List<IQuestion> questions, CongratulationsFactory congratulationsFactory, RemainingQuestionsPhrase remainingQuestionsPhrase, IMessageSender messageSender)
         {
             _questions = questions ?? throw new ArgumentNullException(nameof(questions));
             _congratulationsFactory = congratulationsFactory ?? throw new ArgumentNullException(nameof(congratulationsFactory));
-            _remainingQuestionsPhraseFactory = remainingQuestionsPhraseFactory ?? throw new ArgumentNullException(nameof(remainingQuestionsPhraseFactory));
+            _remainingQuestionsPhrase = remainingQuestionsPhrase ?? throw new ArgumentNullException(nameof(remainingQuestionsPhrase));
             _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
             _currentQuestion = _questions[0];
         }
         
         public void Start()
-            => _messageSender.SendMessage($"{_remainingQuestionsPhraseFactory.Create(0, _questions.Count)}\n{_currentQuestion.Text}");
+            => _messageSender.SendMessage($"{_remainingQuestionsPhrase.GetPhrase(_questions.Count)}\n{_currentQuestion.Text}");
 
         public void Continue(string answer)
         {
@@ -43,7 +43,7 @@ namespace EightOfMarchBot.Loop
             }
             
             _currentQuestion = _questions[nextQuestionIndex];
-            var remainingQuestionsPhrase = _remainingQuestionsPhraseFactory.Create(_questions.IndexOf(_currentQuestion), _questions.Count);
+            var remainingQuestionsPhrase = _remainingQuestionsPhrase.GetPhrase(_questions.Count - _questions.IndexOf(_currentQuestion));
             _messageSender.SendMessage($"{_congratulationsFactory.Create()}! {remainingQuestionsPhrase}\n{_currentQuestion.Text}");
         }
     }
