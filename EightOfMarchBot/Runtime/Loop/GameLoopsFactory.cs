@@ -34,7 +34,7 @@ public sealed class GameLoopsFactory
         };
 
         var congratulationsFactory = new CongratulationsFactory(congratulations);
-        var remainingQuestionsPhraseFactory = new RemainingQuestionsPhrase();
+        var remainingQuestionsPhraseFactory = new RemainingQuestionsPhrases();
             
         var questionsCycle = new QuestionsCycle(questions, congratulationsFactory, remainingQuestionsPhraseFactory, _messageSender);
         return new GameLoop(questionsCycle, gameStart, gameEnd); 

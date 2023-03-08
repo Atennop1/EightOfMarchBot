@@ -1,6 +1,6 @@
 ﻿namespace EightOfMarchBot.Loop;
 
-public sealed class RemainingQuestionsPhrase
+public sealed class RemainingQuestionsPhrases
 {
     public string GetPhrase(int remainingQuestionsCount)
     {

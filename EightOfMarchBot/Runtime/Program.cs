@@ -6,8 +6,6 @@
         {
             var game = new Game();
             game.Play();
-
-            while (true) { }
         }
     }
 }
