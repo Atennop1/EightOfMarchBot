@@ -1,5 +1,4 @@
-﻿using EightOfMarchBot.Core;
-using EightOfMarchBot.Loop;
+﻿using EightOfMarchBot.Loop;
 using Telegram.BotAPI;
 
 namespace EightOfMarchBot
@@ -9,10 +8,10 @@ namespace EightOfMarchBot
         public void Play()
         {
             var client = new BotClient("your bot token");
-            var messageSender = new MessageSender(client);
+            var telegram = new Core.Telegram(client);
 
-            var gameLoopFactory = new GameLoopsFactory(messageSender);
-            var updatingCycle = new UpdatingCycle(gameLoopFactory, client, messageSender);
+            var gameLoopFactory = new GameLoopsFactory(telegram);
+            var updatingCycle = new UpdatingCycle(gameLoopFactory, client, telegram);
             updatingCycle.Start();
         }
     }
