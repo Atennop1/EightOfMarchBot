@@ -1,6 +1,6 @@
 ﻿namespace EightOfMarchBot.Core
 {
-    public interface IMessageSender
+    public interface ITelegram
     {
         void ChangeChat(string chatId);
         void SendMessage(string message);

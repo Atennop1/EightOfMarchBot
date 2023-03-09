@@ -4,28 +4,28 @@ namespace EightOfMarchBot.Loop;
 
 public sealed class GameLoopsFactory
 {
-    private readonly IMessageSender _messageSender;
+    private readonly ITelegram _telegram;
 
-    public GameLoopsFactory(IMessageSender messageSender)
-        => _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
+    public GameLoopsFactory(ITelegram telegram)
+        => _telegram = telegram ?? throw new ArgumentNullException(nameof(telegram));
 
     public GameLoop Create()
     {
-        var gameStart = new GameStart(_messageSender);
-        var gameEnd = new GameEnd(_messageSender);
+        var gameStart = new GameStart(_telegram);
+        var gameEnd = new GameEnd(_telegram);
 
         var questions = new List<IQuestion>
         {
-            new Question("Для получения первой загадки подойди к Ратмиру и узнай у него ключевое слово", "женская держава"),
+            new Question("Для получения первой загадки подойди к Лёше Шарипову и узнай у него ключевое слово", "великое разнообразие"),
             new Question("Следующую загадку можно получить у Гриши", "писатели"),
-            new Question("Следующая загадка у Лёши Шарипова", "великое разнообразие"),
-            new Question("Дальше у Антона", "физика любви"),
-            new Question("Одну из них можно взять у Лёши Горбачёва", "женщины Англии"),
-            new Question("Снова подойди к Ратмиру", "женские топонимы"),
-            new Question("За завершающей загадкой обращайся к Антону", "ключ к празднику")
+            new Question("Дальше подойди к Антону", "физика любви"),
+            new Question("Следущая у Ратмира", "женская держава"),
+            new Question("Одну из загадок можно взять у Лёши Горбачёва", "женщины Англии"),
+            new Question("Опять обращайся к Ратмиру", "женские топонимы"),
+            new Question("За завершающей загадкой подойди к Антону", "ключ к празднику")
         };
 
-        var congratulations = new[]
+        var congratulationStrings = new[]
         {
             "Верно",
             "Верный ответ",
@@ -33,10 +33,10 @@ public sealed class GameLoopsFactory
             "Хорошая работа"
         };
 
-        var congratulationsFactory = new CongratulationsFactory(congratulations);
+        var congratulations = new Congratulations(congratulationStrings);
         var remainingQuestionsPhraseFactory = new RemainingQuestionsPhrases();
             
-        var questionsCycle = new QuestionsCycle(questions, congratulationsFactory, remainingQuestionsPhraseFactory, _messageSender);
+        var questionsCycle = new QuestionsCycle(questions, congratulations, remainingQuestionsPhraseFactory, _telegram);
         return new GameLoop(questionsCycle, gameStart, gameEnd); 
     }
 }

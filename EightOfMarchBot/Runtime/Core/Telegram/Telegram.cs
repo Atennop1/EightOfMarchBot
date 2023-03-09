@@ -5,12 +5,12 @@ using Telegram.BotAPI.AvailableMethods;
 
 namespace EightOfMarchBot.Core
 {
-    public sealed class MessageSender : IMessageSender
+    public sealed class Telegram : ITelegram
     {
         private readonly BotClient _botClient;
         private string _currentChatId;
 
-        public MessageSender(BotClient botClient)
+        public Telegram(BotClient botClient)
             => _botClient = botClient ?? throw new ArgumentNullException(nameof(botClient));
 
         public void ChangeChat(string chatId)
@@ -21,7 +21,7 @@ namespace EightOfMarchBot.Core
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
             
-            try{ _botClient.SendMessage(new SendMessageArgs(_currentChatId, message)); }
+            try { _botClient.SendMessage(new SendMessageArgs(_currentChatId, message)); }
             catch { /* Some client issues */ }
         }
 
@@ -32,7 +32,7 @@ namespace EightOfMarchBot.Core
             
             if (message == null)
                 throw new ArgumentNullException(nameof(message));
-
+            
             try
             {
                 var sendPhotoArgs = new SendPhotoArgs(_currentChatId, photoLink);

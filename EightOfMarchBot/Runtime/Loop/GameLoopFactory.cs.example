@@ -1,0 +1,35 @@
+﻿using EightOfMarchBot.Core;
+
+namespace EightOfMarchBot.Loop;
+
+public sealed class GameLoopsFactory
+{
+    private readonly ITelegram _telegram;
+
+    public GameLoopsFactory(ITelegram telegram)
+        => _telegram = telegram ?? throw new ArgumentNullException(nameof(telegram));
+
+    public GameLoop Create()
+    {
+        var gameStart = new GameStart(_telegram);
+        var gameEnd = new GameEnd(_telegram);
+
+        var questions = new List<IQuestion>
+        {
+            new Question("question 1", "answer 1"),
+            new Question("question 2", "answer 2")
+        };
+
+        var congratulationStrings = new[]
+        {
+            "well done",
+            "great job"
+        };
+
+        var congratulations = new Congratulations(congratulationStrings);
+        var remainingQuestionsPhraseFactory = new RemainingQuestionsPhrases();
+            
+        var questionsCycle = new QuestionsCycle(questions, congratulations, remainingQuestionsPhraseFactory, _telegram);
+        return new GameLoop(questionsCycle, gameStart, gameEnd); 
+    }
+}

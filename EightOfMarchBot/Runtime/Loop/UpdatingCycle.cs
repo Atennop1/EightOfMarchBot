@@ -8,15 +8,15 @@ public sealed class UpdatingCycle
 {
     private readonly GameLoopsFactory _gameLoopsFactory;
     private readonly BotClient _client;
-    private readonly IMessageSender _messageSender;
+    private readonly ITelegram _telegram;
 
     private readonly Dictionary<long, GameLoop> _userLoops = new();
 
-    public UpdatingCycle(GameLoopsFactory gameLoopsFactory, BotClient client, IMessageSender messageSender)
+    public UpdatingCycle(GameLoopsFactory gameLoopsFactory, BotClient client, ITelegram telegram)
     {
         _gameLoopsFactory = gameLoopsFactory ?? throw new ArgumentNullException(nameof(gameLoopsFactory));
         _client = client ?? throw new ArgumentNullException(nameof(client));
-        _messageSender = messageSender ?? throw new ArgumentNullException(nameof(messageSender));
+        _telegram = telegram ?? throw new ArgumentNullException(nameof(telegram));
     }
 
     public void Start()
@@ -40,8 +40,8 @@ public sealed class UpdatingCycle
                     _userLoops.Add(update.Message.From.Id, _gameLoopsFactory.Create());
 
                 var currentUserLoop = _userLoops[update.Message.From.Id];
-                _messageSender.ChangeChat(update.Message.Chat.Id.ToString());
-            
+                _telegram.ChangeChat(update.Message.Chat.Id.ToString());
+
                 if (update.Message.Text == "/start")
                 {
                     currentUserLoop.Start();
