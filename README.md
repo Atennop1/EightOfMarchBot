@@ -10,8 +10,8 @@ This project is a simple telegram bot with a quest inside. It was prepared for m
 
 ### Specifics
  - Project using **OOP** and **SOLID**
- - Clearest **DI**
- - Single-layer architecture as a clean model
+ - Single-layer architecture as a clean model 
+ - Clear **DI**
  
  ## Conclusion
 
